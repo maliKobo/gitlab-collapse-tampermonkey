@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitLab Collapse
 // @namespace    http://muhammmada.li
-// @version      0.1
+// @version      0.2
 // @description  collapse all gitlab files in diff view
 // @author       Muhammad Ali
 // @match        https://git.sauniverse.com/*/merge_requests*
@@ -29,7 +29,7 @@
         parent = $(".commit-stat-summary")[0];
     }
 
-    $(buttonHtml2).appendTo(parent);
+    $(buttonHtml2).prependTo(parent);
     var collapseBtn = $("#collapse-all-button");
 
     var first = true;
@@ -73,7 +73,7 @@
 
 
     var showFilenamesBox = function() {
-        var rows = $(".file-title").find("a");
+        var rows = $(".file-header-content").find("a");
         var filenames = {};
         rows.each(function() {
             var strongEle = $(this).find("strong");
