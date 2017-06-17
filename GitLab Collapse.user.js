@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitLab Collapse
 // @namespace    http://muhammmada.li
-// @version      0.2
+// @version      0.3
 // @description  collapse all gitlab files in diff view
 // @author       Muhammad Ali
 // @match        https://git.sauniverse.com/*/merge_requests*
@@ -90,10 +90,12 @@
         var keys = Object.keys(filenames);
         keys = unique(keys.sort());
 
+        var shortenedFilenames = shortenFilenames(keys);
+
         var files = '<div class="mr-state-widget">';
         files += '  <ul>';
         $(keys).each(function() {
-            files += '    <li><a href="' + filenames[this] + '">' + this + '</a></li>';
+            files += '    <li><a href="' + filenames[this] + '">' + shortenedFilenames[this] + '</a></li>';
         });
         files += '  </ul>';
         files += '</div>';
@@ -109,6 +111,30 @@
         return array.filter(function(el, index, arr) {
             return index === arr.indexOf(el);
         });
+    }
+
+    function shortenFilenames(filenames) {
+        var common = filenames[0];
+        var i = 0;
+        var broken = false;
+        while(!broken) {
+            for (var j = 0; j < filenames.length; j++) {
+                var name = filenames[j];
+                if (i >= name.length || common.charAt(i) !== name.charAt(i)) {
+                    broken = true;
+                    break;
+                }
+            }
+            i += 1;
+        }
+
+        var shortenedNames = {};
+        for (var j = 0; j < filenames.length; j++) {
+            var name = filenames[j];
+            shortenedNames[name] = "…" + name.substring(i-1, name.length);
+        }
+
+        return shortenedNames;
     }
 
 })();
