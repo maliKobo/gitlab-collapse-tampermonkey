@@ -24,9 +24,9 @@
 
     var buttonHtml2 = '<i id="collapse-all-button" class="fa fa-compress award-control-icon-normal"></i>';
 
-    var parent = $(".awards")[0];
+    var parent = $(".award-menu-holder")[0];
     if (parent === undefined) {
-        parent = $(".commit-stat-summary")[0];
+        parent = $(".awards.js-awards-block")[0];
     }
 
     $(buttonHtml2).prependTo(parent);
@@ -138,3 +138,4 @@
     }
 
 })();
+
